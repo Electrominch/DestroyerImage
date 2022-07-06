@@ -1,0 +1,168 @@
+﻿<Window x:Class="DestroyerImage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DestroyerImage"
+        mc:Ignorable="d"
+        Title="Destroyer" Height="560" Width="1000"
+        Style="{DynamicResource CurstomWindowStyle}"
+        IsEnabled="{Binding EnableWindow}" MinWidth="1000" MinHeight="560"
+        Icon="/DestroyerImage;component/icon.png">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0" BorderBrush="Black" Header="Настройки">
+            <ScrollViewer>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Grid.Row="0" Content="Хвост" Margin="5" IsChecked="{Binding Tail_, Mode=TwoWay}"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="25,0,5,0" IsEnabled="{Binding Tail_}">
+                        <Label Content="Диапазон сдвига хвоста наружу(a:b)"/>
+                        <TextBox Width="70" Text="{Binding TailRadiusShiftOutside_rndRange_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="25,0,5,0" IsEnabled="{Binding Tail_}">
+                        <Label Content="Диапазон сдвига хвоста внутрь(a:b)"/>
+                        <TextBox Width="70" Text="{Binding TailRadiusShiftInside_rndRange_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="25,0,5,0" IsEnabled="{Binding Tail_}">
+                        <Label Content="Шанс для копирования пикселей в хвосте (0-100)"/>
+                        <TextBox Width="70" Text="{Binding ChanceToSecondTail_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="25,0,5,0" IsEnabled="{Binding Tail_}">
+                        <Label Content="Максимальное кол-во копий пикселей в хвосте"/>
+                        <TextBox Width="70" Text="{Binding MaxTailCopies, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="5,0,5,0">
+                        <Label Content="Диапазон случайного добавления к радиусу для чистки (a,b)"/>
+                        <TextBox Width="70" Text="{Binding AddRadiusToRemovePixels_rndRange_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="5,0,5,0">
+                        <Label Content="Шанс восстановить удалённый пиксель(0-100)"/>
+                        <TextBox Width="70" Text="{Binding ChanceToRemoveAddPixels_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="5,0,5,0">
+                        <Label Content="Изменения радиуса для каждой итерации (&lt;0)"/>
+                        <TextBox Width="70" Text="{Binding RadiusShift_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="5,0,5,0">
+                        <Label Content="Процент пустых пикселей для завершения (0-100)"/>
+                        <TextBox Width="70" Text="{Binding PercentEmptyPixelsAtTheEnd, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="5,0,5,0">
+                        <Label Content="Максимальное количество потоков выполнения"/>
+                        <TextBox Width="70" Text="{Binding MaxThreads_string, Mode=TwoWay}" Margin="5"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="1" BorderBrush="Black" Header="Файл">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Исходная картинка"/>
+                        <Button Height="20" VerticalAlignment="Top" Width="60" Margin="5" Content="Открыть" Command="{Binding OpenImageCommand}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1">
+                        <Label Content="Папка для сохранения"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="SaveFolderTextBox" IsReadOnly="True" Margin="5" Width="195" Text="{Binding SavePath, Mode=TwoWay}" TextChanged="SaveFolderTextBox_TextChanged"/>
+                            <Button Height="20" VerticalAlignment="Top" Width="22" Margin="5" Content="..." Command="{Binding SelectSavePathCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Имя первого файла"/>
+                            <TextBox Margin="5" Width="114" Text="{Binding FirstFileName, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Image Grid.Column="1" Source="{Binding ImagePath}" Stretch="Fill" Margin="5"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Анимация разрушения" BorderBrush="Black">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Button Command="{Binding GenerateDestroyGIF}" Content="Генерировать" Margin="2,2,2,2" Width="85" HorizontalAlignment="Left"/>
+                    <Button Command="{Binding PlayDestroyGIF}" Content="Запуск" Margin="2" Width="85" HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Колчество кадров "/>
+                        <Label Content="{Binding CurrentDestroyFrame}"/>
+                        <Label Content="/" Margin="-8,0,0,0"/>
+                        <Label Content="{Binding QuantDestroyFrames}" Margin="-8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Время между кадрами"/>
+                        <TextBox Text="{Binding DelayBetweenDestroyFrames_string}" Margin="2" Width="85" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Command="{Binding SaveDestroyCommand}" Content="Сохранить" Margin="2" Width="85" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+
+                <Image x:Name="DestroyDisp" Grid.Column="1"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Анимация восстановления" BorderBrush="Black">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Button Command="{Binding GenerateRepairGIF}" Content="Генерировать" Margin="2,2,2,2" Width="85" HorizontalAlignment="Left"/>
+                    <Button Command="{Binding PlayRepairGIF}" Content="Запуск" Margin="2" Width="85" HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Колчество кадров "/>
+                        <Label Content="{Binding CurrentRepairFrame}"/>
+                        <Label Content="/" Margin="-8,0,0,0"/>
+                        <Label Content="{Binding QuantRepairFrames}" Margin="-8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Время между кадрами"/>
+                        <TextBox Text="{Binding DelayBetweenRepairFrames_string}" Margin="2" Width="85" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Command="{Binding SaveRepairCommand}" Content="Сохранить" Margin="2" Width="85" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+
+                <Image x:Name="RepairDisp" Grid.Column="1"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

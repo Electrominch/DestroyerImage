@@ -1,0 +1,9 @@
+﻿<Application x:Class="DestroyerImage.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DestroyerImage"
+             StartupUri="Windows/MainWindow/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary Source="CustomWindow/CurstomWindowStyle.xaml"/>
+    </Application.Resources>
+</Application>
